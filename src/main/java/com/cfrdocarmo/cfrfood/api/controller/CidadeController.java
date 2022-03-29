@@ -2,6 +2,8 @@ package com.cfrdocarmo.cfrfood.api.controller;
 
 import java.util.List;
 
+import com.cfrdocarmo.cfrfood.domain.exception.EstadoNaoEncontradoException;
+import com.cfrdocarmo.cfrfood.domain.exception.NegocioException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,15 +45,24 @@ public class CidadeController {
 	}
 	
 	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
 	public Cidade adicionar(@RequestBody Cidade cidade){
-		return cadastroCidade.salvar(cidade);
+		try {
+			return cadastroCidade.salvar(cidade);
+		}  catch (EstadoNaoEncontradoException e) {
+			throw new NegocioException(e.getMessage(), e);
+		}
 	}
 	
 	@PutMapping("/{cidadeId}")
 	public Cidade atualizar(@PathVariable Long cidadeId, @RequestBody Cidade cidade){
 		Cidade cidadeAtual = cadastroCidade.buscarOuFalhar(cidadeId);
 		BeanUtils.copyProperties(cidade, cidadeAtual, "id");
-		return cadastroCidade.salvar(cidadeAtual);
+		try{
+			return cadastroCidade.salvar(cidadeAtual);
+		} catch (EstadoNaoEncontradoException e) {
+			throw new NegocioException(e.getMessage(), e);
+		}
 	}
 	
 	@DeleteMapping("/{cidadeId}")

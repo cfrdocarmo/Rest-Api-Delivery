@@ -4,6 +4,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
+import com.cfrdocarmo.cfrfood.domain.exception.CozinhaNaoEncontradaException;
+import com.cfrdocarmo.cfrfood.domain.exception.NegocioException;
+import com.cfrdocarmo.cfrfood.domain.model.Cozinha;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,7 +51,11 @@ public class RestauranteController {
 	
 	@PostMapping
 	public Restaurante adicionar(@RequestBody Restaurante restaurante) {
-		return cadastroRestaurante.salvar(restaurante);
+		try{
+			return cadastroRestaurante.salvar(restaurante);
+		} catch (CozinhaNaoEncontradaException e) {
+			throw new NegocioException(e.getMessage());
+		}
 	}
 	
 	@PutMapping("/{restauranteId}")
@@ -56,7 +63,11 @@ public class RestauranteController {
 		Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(restauranteId);
 		
 		BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco", "dataCadastro", "produtos");
-		return cadastroRestaurante.salvar(restauranteAtual);
+		try {
+			return cadastroRestaurante.salvar(restauranteAtual);
+		} catch (CozinhaNaoEncontradaException e) {
+			throw new NegocioException(e.getMessage());
+		}
 	}
 	
 	@PatchMapping("/{restauranteId}")
