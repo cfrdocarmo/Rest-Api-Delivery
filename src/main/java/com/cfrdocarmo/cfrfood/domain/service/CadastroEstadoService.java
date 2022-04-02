@@ -6,8 +6,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.cfrdocarmo.cfrfood.domain.exception.EntidadeEmUsoExceotion;
-import com.cfrdocarmo.cfrfood.domain.exception.EntidadeNaoEncontradaException;
+import com.cfrdocarmo.cfrfood.domain.exception.EntidadeEmUsoException;
 import com.cfrdocarmo.cfrfood.domain.model.Estado;
 import com.cfrdocarmo.cfrfood.domain.repository.EstadoRepository;
 
@@ -32,7 +31,7 @@ public class CadastroEstadoService {
 			throw new EstadoNaoEncontradoException(estadoId);
 		
 		} catch (DataIntegrityViolationException e) {
-			throw new EntidadeEmUsoExceotion(
+			throw new EntidadeEmUsoException(
 				String.format(MSG_ESTADO_EM_USO, estadoId));
 		}
 	}

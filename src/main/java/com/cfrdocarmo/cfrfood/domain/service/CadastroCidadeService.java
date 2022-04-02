@@ -6,8 +6,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.cfrdocarmo.cfrfood.domain.exception.EntidadeEmUsoExceotion;
-import com.cfrdocarmo.cfrfood.domain.exception.EntidadeNaoEncontradaException;
+import com.cfrdocarmo.cfrfood.domain.exception.EntidadeEmUsoException;
 import com.cfrdocarmo.cfrfood.domain.model.Cidade;
 import com.cfrdocarmo.cfrfood.domain.model.Estado;
 import com.cfrdocarmo.cfrfood.domain.repository.CidadeRepository;
@@ -39,7 +38,7 @@ public class CadastroCidadeService {
 		}catch (EmptyResultDataAccessException e) {
 			throw new CidadeNaoEncontradaException(cidadeId);
 		}catch (DataIntegrityViolationException ex) {
-			throw new EntidadeEmUsoExceotion(String.format(MSG_CIDADE_EM_USO, cidadeId));
+			throw new EntidadeEmUsoException(String.format(MSG_CIDADE_EM_USO, cidadeId));
 		}
 	}
 

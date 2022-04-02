@@ -6,8 +6,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.cfrdocarmo.cfrfood.domain.exception.EntidadeEmUsoExceotion;
-import com.cfrdocarmo.cfrfood.domain.exception.EntidadeNaoEncontradaException;
+import com.cfrdocarmo.cfrfood.domain.exception.EntidadeEmUsoException;
 import com.cfrdocarmo.cfrfood.domain.model.Cozinha;
 import com.cfrdocarmo.cfrfood.domain.model.Restaurante;
 import com.cfrdocarmo.cfrfood.domain.repository.RestauranteRepository;
@@ -39,7 +38,7 @@ public class CadastroRestauranteService {
 		} catch (EmptyResultDataAccessException e) {
 			throw new RestauranteNaoEncontradoException(restauranteId);
 		} catch (DataIntegrityViolationException e) {
-			throw new EntidadeEmUsoExceotion(
+			throw new EntidadeEmUsoException(
 					String.format(MSG_RESTAURANTE_EM_USO, restauranteId));
 		}
 		
