@@ -19,6 +19,8 @@ import com.cfrdocarmo.cfrfood.domain.model.Estado;
 import com.cfrdocarmo.cfrfood.domain.repository.EstadoRepository;
 import com.cfrdocarmo.cfrfood.domain.service.CadastroEstadoService;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/estados")
 public class EstadoController {
@@ -39,13 +41,13 @@ public class EstadoController {
 	}
 	
 	@PostMapping
-	public Estado adiconar(@RequestBody Estado estado){
+	public Estado adiconar(@RequestBody @Valid Estado estado){
 		return cadastroEstado.salvar(estado);
 	}
 	
 	
 	@PutMapping("/{estadoId}")
-	public Estado atualizar(@PathVariable Long estadoId, @RequestBody Estado estado){
+	public Estado atualizar(@PathVariable Long estadoId, @RequestBody @Valid Estado estado){
 		Estado estadoAtual = cadastroEstado.buscarOuFalhar(estadoId);
 		BeanUtils.copyProperties(estado, estadoAtual, "id");
 		return cadastroEstado.salvar(estadoAtual);

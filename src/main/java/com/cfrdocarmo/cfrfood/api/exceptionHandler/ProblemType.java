@@ -1,4 +1,4 @@
-package com.cfrdocarmo.cfrfood.api.exceptionhandler;
+package com.cfrdocarmo.cfrfood.api.exceptionHandler;
 
 import lombok.Getter;
 
@@ -7,6 +7,7 @@ public enum ProblemType {
 
     MENSAGEM_INCOMPREENSIVEL("/mensagem-incompreensivel", "Mensagem incompreensível"),
     PARAMETRO_INVALIDO("/parametro-invalido", "Parametro inválido."),
+    DADOS_INVALIDOS("/dados-invalidos", "Dados inválidos."),
     ERRO_DE_SISTEMA("/erro-de-sistema", "Erro de sistema."),
     RECURSO_NAO_ENCONTRADO("/recurso-nao-encontrada", "Recurso não encontrada"),
     ENTIDADE_EM_USO("/entidade-em-uso", "Entidade em uso"),

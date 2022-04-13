@@ -19,9 +19,11 @@ import com.cfrdocarmo.cfrfood.domain.model.Cozinha;
 import com.cfrdocarmo.cfrfood.domain.repository.CozinhaRepository;
 import com.cfrdocarmo.cfrfood.domain.service.CadastroCozinhaService;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping(value = "/cozinhas")
-public class CozinhaControl {
+public class CozinhaController {
 
 	@Autowired
 	private CozinhaRepository cozinhaRepository;
@@ -41,13 +43,14 @@ public class CozinhaControl {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Cozinha adicionar(@RequestBody Cozinha cozinha) {
+	public Cozinha adicionar(@RequestBody @Valid Cozinha cozinha) {
+
 		return cadastroCozinha.salvar(cozinha);
 	}
 
 	
 	@PutMapping(value = "/{cozinhaId}")
-	public Cozinha atualizar(@PathVariable Long cozinhaId, @RequestBody Cozinha cozinha){
+	public Cozinha atualizar(@PathVariable Long cozinhaId, @RequestBody @Valid Cozinha cozinha){
 		Cozinha cozinhaAtual = cadastroCozinha.buscarOuFalhar(cozinhaId);
 		BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
 		return cadastroCozinha.salvar(cozinhaAtual);
