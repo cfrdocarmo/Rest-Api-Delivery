@@ -10,6 +10,7 @@ import com.cfrdocarmo.cfrfood.domain.exception.EntidadeEmUsoException;
 import com.cfrdocarmo.cfrfood.domain.model.Cidade;
 import com.cfrdocarmo.cfrfood.domain.model.Estado;
 import com.cfrdocarmo.cfrfood.domain.repository.CidadeRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CadastroCidadeService {
@@ -21,7 +22,8 @@ public class CadastroCidadeService {
 	
 	@Autowired
 	private CadastroEstadoService cadastroEstado;
-	
+
+	@Transactional
 	public Cidade salvar(Cidade cidade) {
 		Long estadoId = cidade.getEstado().getId();
 		
@@ -31,10 +33,12 @@ public class CadastroCidadeService {
 		
 		return cidadeRepository.save(cidade);
 	}
-	
+
+	@Transactional
 	public void excluir(Long cidadeId) {
 		try {
 			cidadeRepository.deleteById(cidadeId);
+			cidadeRepository.flush();
 		}catch (EmptyResultDataAccessException e) {
 			throw new CidadeNaoEncontradaException(cidadeId);
 		}catch (DataIntegrityViolationException ex) {
