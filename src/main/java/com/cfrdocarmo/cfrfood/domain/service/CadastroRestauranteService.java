@@ -1,18 +1,17 @@
 package com.cfrdocarmo.cfrfood.domain.service;
 
 import com.cfrdocarmo.cfrfood.domain.exception.RestauranteNaoEncontradoException;
-import com.cfrdocarmo.cfrfood.domain.model.Cidade;
-import com.cfrdocarmo.cfrfood.domain.model.FormaPagamento;
+import com.cfrdocarmo.cfrfood.domain.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.cfrdocarmo.cfrfood.domain.exception.EntidadeEmUsoException;
-import com.cfrdocarmo.cfrfood.domain.model.Cozinha;
-import com.cfrdocarmo.cfrfood.domain.model.Restaurante;
 import com.cfrdocarmo.cfrfood.domain.repository.RestauranteRepository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class CadastroRestauranteService {
@@ -31,6 +30,9 @@ public class CadastroRestauranteService {
 	@Autowired
 	private CadastroFormaPagamentoService cadastroFormaPagamento;
 
+	@Autowired
+	private CadastroUsuarioService cadastroUsuario;
+
 	@Transactional
 	public Restaurante salvar(Restaurante restaurante) {
 		Long cozinhaId = restaurante.getCozinha().getId();
@@ -43,6 +45,34 @@ public class CadastroRestauranteService {
 		restaurante.getEndereco().setCidade(cidade);
 		
 		return restauranteRepository.save(restaurante);
+	}
+
+	@Transactional
+	public void ativar(Long restauranteId) {
+		Restaurante restauranteAtual = buscarOuFalhar(restauranteId);
+
+		restauranteAtual.ativar();
+	}
+
+	@Transactional
+	public void inativar(Long restauranteId) {
+		Restaurante restauranteAtual = buscarOuFalhar(restauranteId);
+
+		restauranteAtual.inativar();
+	}
+
+	@Transactional
+	public void abrir(Long restauranteId) {
+		Restaurante restauranteAtual = buscarOuFalhar(restauranteId);
+
+		restauranteAtual.abrir();
+	}
+
+	@Transactional
+	public void fechar(Long restauranteId) {
+		Restaurante restauranteAtual = buscarOuFalhar(restauranteId);
+
+		restauranteAtual.fechar();
 	}
 
 	@Transactional
@@ -62,6 +92,32 @@ public class CadastroRestauranteService {
 	}
 
 	@Transactional
+	public void associarResponsavel(Long restauranteId, Long usuario_id) {
+		Restaurante restaurante = buscarOuFalhar(restauranteId);
+		Usuario usuario = cadastroUsuario.buscarOuFalhar(usuario_id);
+
+		restaurante.associarUsuario(usuario);
+	}
+
+	@Transactional
+	public void desassociarResponsavel(Long restauranteId, Long usuario_id) {
+		Restaurante restaurante = buscarOuFalhar(restauranteId);
+		Usuario usuario = cadastroUsuario.buscarOuFalhar(usuario_id);
+
+		restaurante.desassociarUsuario(usuario);
+	}
+
+	@Transactional
+	public void ativarMultiplos(List<Long> restauranteIds) {
+		restauranteIds.forEach(this::ativar);
+	}
+
+	@Transactional
+	public void inativarMultiplos(List<Long> restauranteIds) {
+		restauranteIds.forEach(this::inativar);
+	}
+
+	@Transactional
 	public void excluir(Long restauranteId) {
 		try {
 			restauranteRepository.deleteById(restauranteId);
@@ -75,33 +131,9 @@ public class CadastroRestauranteService {
 		
 	}
 
-	@Transactional
-	public void ativar(Long restauranteId) {
-		Restaurante restauranteAtual = buscarOuFalhar(restauranteId);
 
-		restauranteAtual.ativar();
-	}
 
-	@Transactional
-	public void inativar(Long restauranteId) {
-		Restaurante restauranteAtual = buscarOuFalhar(restauranteId);
 
-		restauranteAtual.inativar();
-	}
-
-	@Transactional
-	public void fechar(Long restauranteId) {
-		Restaurante restauranteAtual = buscarOuFalhar(restauranteId);
-
-		restauranteAtual.fechar();
-	}
-
-	@Transactional
-	public void abrir(Long restauranteId) {
-		Restaurante restauranteAtual = buscarOuFalhar(restauranteId);
-
-		restauranteAtual.abrir();
-	}
 
 	public Restaurante buscarOuFalhar(Long restauranteId) {
 		return restauranteRepository.findById(restauranteId)

@@ -5,11 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class PermissaoModel {
+public class RestauranteResumoModel {
 
     private Long id;
     private String nome;
-    private String descricao;
 
 }
-

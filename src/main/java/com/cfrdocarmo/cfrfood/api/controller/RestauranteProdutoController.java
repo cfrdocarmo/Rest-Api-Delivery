@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/restaurantes/{restauranteId}/produtos")
-public class ProdutoController {
+public class RestauranteProdutoController {
 
     @Autowired
     private CadastroProdutoService cadastroProduto;

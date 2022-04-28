@@ -7,6 +7,7 @@ import com.cfrdocarmo.cfrfood.api.model.input.RestauranteInput;
 import com.cfrdocarmo.cfrfood.domain.exception.CidadeNaoEncontradaException;
 import com.cfrdocarmo.cfrfood.domain.exception.CozinhaNaoEncontradaException;
 import com.cfrdocarmo.cfrfood.domain.exception.NegocioException;
+import com.cfrdocarmo.cfrfood.domain.exception.RestauranteNaoEncontradoException;
 import com.cfrdocarmo.cfrfood.domain.model.Restaurante;
 import com.cfrdocarmo.cfrfood.domain.repository.RestauranteRepository;
 import com.cfrdocarmo.cfrfood.domain.service.CadastroRestauranteService;
@@ -94,6 +95,26 @@ public class RestauranteController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void inativar(@PathVariable Long restauranteId) {
 		cadastroRestaurante.inativar(restauranteId);
+	}
+
+	@PutMapping("/ativacoes")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void ativarMultiplos(@RequestBody List<Long> restaurantesIds) {
+		try {
+			cadastroRestaurante.ativarMultiplos(restaurantesIds);
+		} catch (RestauranteNaoEncontradoException e) {
+			throw new NegocioException(e.getMessage(), e);
+		}
+	}
+
+	@DeleteMapping("/ativacoes")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void inativarMultiplos(@RequestBody List<Long> restaurantesIds) {
+		try {
+			cadastroRestaurante.inativarMultiplos(restaurantesIds);
+		} catch (RestauranteNaoEncontradoException e) {
+			throw new NegocioException(e.getMessage(), e);
+		}
 	}
 
 	@DeleteMapping("/{restauranteId}")
