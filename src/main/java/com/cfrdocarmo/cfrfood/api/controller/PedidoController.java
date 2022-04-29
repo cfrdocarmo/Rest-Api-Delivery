@@ -12,8 +12,12 @@ import com.cfrdocarmo.cfrfood.domain.model.Pedido;
 import com.cfrdocarmo.cfrfood.domain.model.Usuario;
 import com.cfrdocarmo.cfrfood.domain.repository.PedidoRepository;
 import com.cfrdocarmo.cfrfood.domain.service.EmissaoPedidoService;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -39,6 +43,24 @@ public class PedidoController {
     private PedidoInputDisassembler pedidoInputDisassembler;
 
 
+//    @GetMapping
+//    public MappingJacksonValue listar(@RequestParam(required = false) String campos) {
+//        List<Pedido> pedidos = pedidoRepository.findAll();
+//        List<PedidoResumoModel> pedidosModel = pedidoResumoModelAssembler.toCollectionModel(pedidos);
+//
+//        MappingJacksonValue pedidosWrapper = new MappingJacksonValue(pedidosModel);
+//
+//        SimpleFilterProvider filterProvider = new SimpleFilterProvider();
+//
+//        pedidosWrapper.setFilters(filterProvider);
+//        filterProvider.addFilter("pedidoFilter", SimpleBeanPropertyFilter.serializeAll());
+//
+//        if(StringUtils.isNotBlank(campos)) {
+//            filterProvider.addFilter("pedidoFilter", SimpleBeanPropertyFilter.filterOutAllExcept(campos.split(",")));
+//        }
+//
+//        return pedidosWrapper;
+//    }
 
     @GetMapping
     public List<PedidoResumoModel> listar() {
@@ -47,9 +69,9 @@ public class PedidoController {
         return pedidoResumoModelAssembler.toCollectionModel(todosPedidos);
     }
 
-    @GetMapping("/{pedidoId}")
-    public PedidoModel buscar(@PathVariable Long pedidoId) {
-        Pedido pedido = emissaoPedido.buscarOufalhar(pedidoId);
+    @GetMapping("/{codigoPedido}")
+    public PedidoModel buscar(@PathVariable String codigoPedido) {
+        Pedido pedido = emissaoPedido.buscarOuFalhar(codigoPedido);
 
         return pedidoModelAssembler.toModel(pedido);
     }
