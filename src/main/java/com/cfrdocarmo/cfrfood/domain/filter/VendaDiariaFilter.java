@@ -1,4 +1,4 @@
-package com.cfrdocarmo.cfrfood.domain.repository.filter;
+package com.cfrdocarmo.cfrfood.domain.filter;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,9 +8,8 @@ import java.time.OffsetDateTime;
 
 @Getter
 @Setter
-public class PedidoFilter {
+public class VendaDiariaFilter {
 
-    private Long clienteId;
     private Long restauranteId;
 
     @DateTimeFormat( iso = DateTimeFormat.ISO.DATE_TIME)
@@ -18,5 +17,4 @@ public class PedidoFilter {
 
     @DateTimeFormat( iso = DateTimeFormat.ISO.DATE_TIME)
     private OffsetDateTime dataCriacaoFim;
-
 }

@@ -1,8 +1,7 @@
 package com.cfrdocarmo.cfrfood.infrastructure.repository.spec;
 
 import com.cfrdocarmo.cfrfood.domain.model.Pedido;
-import com.cfrdocarmo.cfrfood.domain.model.Restaurante;
-import com.cfrdocarmo.cfrfood.domain.repository.filter.PedidoFilter;
+import com.cfrdocarmo.cfrfood.domain.filter.PedidoFilter;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.Predicate;
