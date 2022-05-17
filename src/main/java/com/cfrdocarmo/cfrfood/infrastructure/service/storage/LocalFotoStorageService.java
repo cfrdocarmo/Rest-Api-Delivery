@@ -1,28 +1,31 @@
 package com.cfrdocarmo.cfrfood.infrastructure.service.storage;
 
 import com.cfrdocarmo.cfrfood.core.storage.StorageProperties;
-import com.cfrdocarmo.cfrfood.domain.service.FotoStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
+import com.cfrdocarmo.cfrfood.domain.service.FotoStorageService;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-//@Service
 public class LocalFotoStorageService implements FotoStorageService {
 
     @Autowired
     private StorageProperties storageProperties;
 
     @Override
-    public InputStream recuperar(String nomeArquivo) {
+    public FotoRecuperada recuperar(String nomeArquivo) {
 
         try {
             Path arquivoPath = getArquivoPath(nomeArquivo);
-            return Files.newInputStream(arquivoPath);
+
+            FotoRecuperada fotoRecuperada = FotoRecuperada.builder()
+                    .inputStream(Files.newInputStream(arquivoPath))
+                    .build();
+
+            return fotoRecuperada;
         } catch (IOException e) {
             throw new StorageException("Não foi possível recuperar arquivo.", e);
         }

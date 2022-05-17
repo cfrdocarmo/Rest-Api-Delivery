@@ -20,6 +20,7 @@
 		<jasperreports-functions.version>6.16.0</jasperreports-functions.version>
 		<jasperreports.version>6.16.0</jasperreports.version>
 		<aws-java-sdk-s3.version>1.12.216</aws-java-sdk-s3.version>
+		<springfox.version>3.0.0</springfox.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -104,7 +105,11 @@
 			<artifactId>aws-java-sdk-s3</artifactId>
 			<version>${aws-java-sdk-s3.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-boot-starter</artifactId>
+			<version>${springfox.version}</version>
+		</dependency>
 
 	</dependencies>
 

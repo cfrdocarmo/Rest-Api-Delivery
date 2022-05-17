@@ -46,6 +46,11 @@
       "name": "cfrdocarmofood.storage.s3.regiao",
       "type": "com.amazonaws.regions.Regions",
       "sourceType": "com.cfrdocarmo.cfrfood.core.storage.StorageProperties$S3"
+    },
+    {
+      "name": "cfrdocarmofood.storage.tipo",
+      "type": "com.cfrdocarmo.cfrfood.core.storage.StorageProperties$TipoStorage",
+      "sourceType": "com.cfrdocarmo.cfrfood.core.storage.StorageProperties"
     }
   ],
   "hints": []

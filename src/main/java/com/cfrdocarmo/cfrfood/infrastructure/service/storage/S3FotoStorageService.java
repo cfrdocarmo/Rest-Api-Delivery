@@ -6,13 +6,12 @@ import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.cfrdocarmo.cfrfood.core.storage.StorageProperties;
-import com.cfrdocarmo.cfrfood.domain.service.FotoStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.cfrdocarmo.cfrfood.domain.service.FotoStorageService;
 
-import java.io.InputStream;
+import java.net.URL;
 
-@Service
 public class S3FotoStorageService implements FotoStorageService {
 
     @Autowired
@@ -22,8 +21,12 @@ public class S3FotoStorageService implements FotoStorageService {
     private StorageProperties storageProperties;
 
     @Override
-    public InputStream recuperar(String nomeArquivo) {
-        return null;
+    public FotoRecuperada recuperar(String nomeArquivo) {
+        String caminhoArquivo = getCaminhoArquivo(nomeArquivo);
+
+        URL url = amazonS3.getUrl(storageProperties.getS3().getBucket(), caminhoArquivo);
+
+        return FotoRecuperada.builder().url(url.toString()).build();
     }
 
     @Override
