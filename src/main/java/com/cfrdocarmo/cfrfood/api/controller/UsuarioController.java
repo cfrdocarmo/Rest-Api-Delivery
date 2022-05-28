@@ -6,6 +6,7 @@ import com.cfrdocarmo.cfrfood.api.model.UsuarioModel;
 import com.cfrdocarmo.cfrfood.api.model.input.SenhaInput;
 import com.cfrdocarmo.cfrfood.api.model.input.UsuarioComSenhaInput;
 import com.cfrdocarmo.cfrfood.api.model.input.UsuarioInput;
+import com.cfrdocarmo.cfrfood.api.openapi.controller.UsuarioControllerOpenApi;
 import com.cfrdocarmo.cfrfood.domain.model.Usuario;
 import com.cfrdocarmo.cfrfood.domain.repository.UsuarioRepository;
 import com.cfrdocarmo.cfrfood.domain.service.CadastroUsuarioService;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/usuarios")
-public class UsuarioController {
+public class UsuarioController implements UsuarioControllerOpenApi {
 
     @Autowired
     private UsuarioRepository usuarioRepository;

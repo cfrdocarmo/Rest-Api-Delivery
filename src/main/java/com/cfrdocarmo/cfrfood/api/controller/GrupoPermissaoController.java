@@ -4,6 +4,7 @@ import com.cfrdocarmo.cfrfood.api.assembler.GrupoInputDisassembler;
 import com.cfrdocarmo.cfrfood.api.assembler.GrupoModelAssembler;
 import com.cfrdocarmo.cfrfood.api.assembler.PermissaoModelAssembler;
 import com.cfrdocarmo.cfrfood.api.model.PermissaoModel;
+import com.cfrdocarmo.cfrfood.api.openapi.controller.GrupoPermissaoControllerOpenApi;
 import com.cfrdocarmo.cfrfood.domain.model.Grupo;
 import com.cfrdocarmo.cfrfood.domain.service.CadastroGrupoService;
 import com.cfrdocarmo.cfrfood.domain.service.CadastroPermissaoService;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/grupos/{grupoId}/permissoes")
-public class GrupoPermissaoController {
+public class GrupoPermissaoController implements GrupoPermissaoControllerOpenApi {
 
     @Autowired
     private CadastroGrupoService cadastroGrupo;

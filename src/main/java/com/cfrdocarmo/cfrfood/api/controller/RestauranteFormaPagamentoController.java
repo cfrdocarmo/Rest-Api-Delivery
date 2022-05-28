@@ -6,6 +6,7 @@ import com.cfrdocarmo.cfrfood.api.assembler.RestauranteModelAssembler;
 import com.cfrdocarmo.cfrfood.api.model.FormaPagamentoModel;
 import com.cfrdocarmo.cfrfood.api.model.RestauranteModel;
 import com.cfrdocarmo.cfrfood.api.model.input.RestauranteInput;
+import com.cfrdocarmo.cfrfood.api.openapi.controller.RestaurantesFormasPagamentoControllerOpenApi;
 import com.cfrdocarmo.cfrfood.domain.exception.CidadeNaoEncontradaException;
 import com.cfrdocarmo.cfrfood.domain.exception.CozinhaNaoEncontradaException;
 import com.cfrdocarmo.cfrfood.domain.exception.NegocioException;
@@ -21,7 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/restaurantes/{restauranteId}/formas-pagamento")
-public class RestauranteFormaPagamentoController {
+public class RestauranteFormaPagamentoController implements RestaurantesFormasPagamentoControllerOpenApi {
 
 	@Autowired
 	private CadastroRestauranteService cadastroRestaurante;

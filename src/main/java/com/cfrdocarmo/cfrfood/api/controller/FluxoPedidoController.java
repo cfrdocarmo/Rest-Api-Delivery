@@ -6,6 +6,7 @@ import com.cfrdocarmo.cfrfood.api.assembler.PedidoResumoModelAssembler;
 import com.cfrdocarmo.cfrfood.api.model.PedidoModel;
 import com.cfrdocarmo.cfrfood.api.model.PedidoResumoModel;
 import com.cfrdocarmo.cfrfood.api.model.input.PedidoInput;
+import com.cfrdocarmo.cfrfood.api.openapi.controller.FluxoPedidoControllerOpenApi;
 import com.cfrdocarmo.cfrfood.domain.exception.EntidadeNaoEncontradaException;
 import com.cfrdocarmo.cfrfood.domain.exception.NegocioException;
 import com.cfrdocarmo.cfrfood.domain.model.Pedido;
@@ -22,7 +23,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/pedidos/{codigoPedido}")
-public class FluxoPedidoController {
+public class FluxoPedidoController implements FluxoPedidoControllerOpenApi {
 
     @Autowired
     private FluxoPedidoService fluxoPedido;

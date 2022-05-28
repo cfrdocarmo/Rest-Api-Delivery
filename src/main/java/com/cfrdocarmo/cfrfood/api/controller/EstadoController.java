@@ -4,6 +4,7 @@ import com.cfrdocarmo.cfrfood.api.assembler.EstadoInputDisassembler;
 import com.cfrdocarmo.cfrfood.api.assembler.EstadoModelAssembler;
 import com.cfrdocarmo.cfrfood.api.model.EstadoModel;
 import com.cfrdocarmo.cfrfood.api.model.input.EstadoInput;
+import com.cfrdocarmo.cfrfood.api.openapi.controller.EstadoControllerOpenApi;
 import com.cfrdocarmo.cfrfood.domain.model.Estado;
 import com.cfrdocarmo.cfrfood.domain.repository.EstadoRepository;
 import com.cfrdocarmo.cfrfood.domain.service.CadastroEstadoService;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/estados")
-public class EstadoController {
+public class EstadoController implements EstadoControllerOpenApi {
 
 	@Autowired
 	private EstadoRepository estadoRepository;

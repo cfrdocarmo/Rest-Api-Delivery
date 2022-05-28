@@ -1,5 +1,6 @@
 package com.cfrdocarmo.cfrfood.api.model.input;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +12,9 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class CidadeInput {
 
+
     @NotBlank
+    @ApiModelProperty(example = "Uberlândia", required = true)
     private String nome;
 
     @Valid

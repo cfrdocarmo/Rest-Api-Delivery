@@ -4,6 +4,7 @@ import com.cfrdocarmo.cfrfood.api.assembler.ProdutoInputDisassembler;
 import com.cfrdocarmo.cfrfood.api.assembler.ProdutoModelAssemble;
 import com.cfrdocarmo.cfrfood.api.model.ProdutoModel;
 import com.cfrdocarmo.cfrfood.api.model.input.ProdutoInput;
+import com.cfrdocarmo.cfrfood.api.openapi.controller.RestauranteProdutoControllerOpenApi;
 import com.cfrdocarmo.cfrfood.domain.model.Produto;
 import com.cfrdocarmo.cfrfood.domain.model.Restaurante;
 import com.cfrdocarmo.cfrfood.domain.repository.ProdutoRepository;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/restaurantes/{restauranteId}/produtos")
-public class RestauranteProdutoController {
+public class RestauranteProdutoController implements RestauranteProdutoControllerOpenApi {
 
     @Autowired
     private CadastroProdutoService cadastroProduto;

@@ -2,6 +2,7 @@ package com.cfrdocarmo.cfrfood.api.controller;
 
 import com.cfrdocarmo.cfrfood.api.assembler.UsuarioModelAssembler;
 import com.cfrdocarmo.cfrfood.api.model.UsuarioModel;
+import com.cfrdocarmo.cfrfood.api.openapi.controller.RestauranteUsuarioResponsavelControllerOpenApi;
 import com.cfrdocarmo.cfrfood.domain.model.Restaurante;
 import com.cfrdocarmo.cfrfood.domain.service.CadastroRestauranteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/restaurantes/{restauranteId}/responsaveis")
-public class RestauranteUsuarioResponsavelController {
+public class RestauranteUsuarioResponsavelController implements RestauranteUsuarioResponsavelControllerOpenApi {
 
     @Autowired
     private CadastroRestauranteService cadastroRestaurante;

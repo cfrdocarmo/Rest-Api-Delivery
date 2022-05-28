@@ -4,12 +4,14 @@ import com.cfrdocarmo.cfrfood.api.assembler.FormaPagamentoAssembler;
 import com.cfrdocarmo.cfrfood.api.assembler.FormaPagamentoInputDisassembler;
 import com.cfrdocarmo.cfrfood.api.model.FormaPagamentoModel;
 import com.cfrdocarmo.cfrfood.api.model.input.FormaPagamentoInput;
+import com.cfrdocarmo.cfrfood.api.openapi.controller.FormasPagamentoControllerOpenApi;
 import com.cfrdocarmo.cfrfood.domain.model.FormaPagamento;
 import com.cfrdocarmo.cfrfood.domain.repository.FormaPagamentoRepository;
 import com.cfrdocarmo.cfrfood.domain.service.CadastroFormaPagamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -21,8 +23,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @RestController
-@RequestMapping("/formas-pagamento")
-public class FormaPagamentoController {
+@RequestMapping(path ="/formas-pagamento", produces = MediaType.APPLICATION_JSON_VALUE)
+public class FormaPagamentoController implements FormasPagamentoControllerOpenApi {
 
     @Autowired
     private FormaPagamentoAssembler formaPagamentoAssembler;

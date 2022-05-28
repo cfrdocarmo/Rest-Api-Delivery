@@ -6,6 +6,7 @@ import com.cfrdocarmo.cfrfood.api.assembler.PedidoResumoModelAssembler;
 import com.cfrdocarmo.cfrfood.api.model.PedidoModel;
 import com.cfrdocarmo.cfrfood.api.model.PedidoResumoModel;
 import com.cfrdocarmo.cfrfood.api.model.input.PedidoInput;
+import com.cfrdocarmo.cfrfood.api.openapi.controller.PedidoControllerOpenApi;
 import com.cfrdocarmo.cfrfood.core.data.PageableTranslator;
 import com.cfrdocarmo.cfrfood.domain.exception.EntidadeNaoEncontradaException;
 import com.cfrdocarmo.cfrfood.domain.exception.NegocioException;
@@ -15,6 +16,8 @@ import com.cfrdocarmo.cfrfood.domain.repository.PedidoRepository;
 import com.cfrdocarmo.cfrfood.domain.filter.PedidoFilter;
 import com.cfrdocarmo.cfrfood.domain.service.EmissaoPedidoService;
 import com.cfrdocarmo.cfrfood.infrastructure.repository.spec.PedidoSpec;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -29,7 +32,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/pedidos")
-public class PedidoController {
+public class PedidoController implements PedidoControllerOpenApi {
 
     @Autowired
     private PedidoModelAssembler pedidoModelAssembler;
@@ -45,26 +48,6 @@ public class PedidoController {
 
     @Autowired
     private PedidoInputDisassembler pedidoInputDisassembler;
-
-
-//    @GetMapping
-//    public MappingJacksonValue listar(@RequestParam(required = false) String campos) {
-//        List<Pedido> pedidos = pedidoRepository.findAll();
-//        List<PedidoResumoModel> pedidosModel = pedidoResumoModelAssembler.toCollectionModel(pedidos);
-//
-//        MappingJacksonValue pedidosWrapper = new MappingJacksonValue(pedidosModel);
-//
-//        SimpleFilterProvider filterProvider = new SimpleFilterProvider();
-//
-//        pedidosWrapper.setFilters(filterProvider);
-//        filterProvider.addFilter("pedidoFilter", SimpleBeanPropertyFilter.serializeAll());
-//
-//        if(StringUtils.isNotBlank(campos)) {
-//            filterProvider.addFilter("pedidoFilter", SimpleBeanPropertyFilter.filterOutAllExcept(campos.split(",")));
-//        }
-//
-//        return pedidosWrapper;
-//    }
 
     @GetMapping
     public Page<PedidoResumoModel> pesquisar(PedidoFilter filtro,

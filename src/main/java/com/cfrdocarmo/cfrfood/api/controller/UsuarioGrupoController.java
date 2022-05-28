@@ -4,6 +4,7 @@ import com.cfrdocarmo.cfrfood.api.assembler.GrupoModelAssembler;
 import com.cfrdocarmo.cfrfood.api.assembler.UsuarioInputDisassembler;
 import com.cfrdocarmo.cfrfood.api.assembler.UsuarioModelAssembler;
 import com.cfrdocarmo.cfrfood.api.model.GrupoModel;
+import com.cfrdocarmo.cfrfood.api.openapi.controller.UsuarioGrupoControllerOpenApi;
 import com.cfrdocarmo.cfrfood.domain.model.Usuario;
 import com.cfrdocarmo.cfrfood.domain.service.CadastroUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/usuarios/{usuarioId}/grupos")
-public class UsuarioGrupoController {
+public class UsuarioGrupoController implements UsuarioGrupoControllerOpenApi {
 
     @Autowired
     private CadastroUsuarioService cadastroUsuario;

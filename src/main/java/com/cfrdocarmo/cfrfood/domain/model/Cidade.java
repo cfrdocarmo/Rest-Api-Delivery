@@ -2,6 +2,8 @@ package com.cfrdocarmo.cfrfood.domain.model;
 
 import com.cfrdocarmo.cfrfood.core.validation.Groups;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -17,11 +19,13 @@ import javax.validation.groups.Default;
 @Entity
 public class Cidade {
 
+	@ApiModelProperty(example = "1")
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@ApiModelProperty(example = "Uberlândia")
 	@NotBlank
 	@Column(nullable = false)
 	private String nome;

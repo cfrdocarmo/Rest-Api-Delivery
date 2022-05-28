@@ -4,6 +4,7 @@ import com.cfrdocarmo.cfrfood.api.assembler.CozinhaInputDisassembler;
 import com.cfrdocarmo.cfrfood.api.assembler.CozinhaModelAssembler;
 import com.cfrdocarmo.cfrfood.api.model.CozinhaModel;
 import com.cfrdocarmo.cfrfood.api.model.input.CozinhaInput;
+import com.cfrdocarmo.cfrfood.api.openapi.controller.CozinhaControllerOpenApi;
 import com.cfrdocarmo.cfrfood.domain.model.Cozinha;
 import com.cfrdocarmo.cfrfood.domain.repository.CozinhaRepository;
 import com.cfrdocarmo.cfrfood.domain.service.CadastroCozinhaService;
@@ -20,7 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/cozinhas")
-public class CozinhaController {
+public class CozinhaController implements CozinhaControllerOpenApi {
 
 	@Autowired
 	private CozinhaRepository cozinhaRepository;

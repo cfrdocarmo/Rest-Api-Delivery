@@ -1,5 +1,6 @@
 package com.cfrdocarmo.cfrfood.api.controller;
 
+import com.cfrdocarmo.cfrfood.api.openapi.controller.EstatisticaControllerOpenApi;
 import com.cfrdocarmo.cfrfood.domain.filter.VendaDiariaFilter;
 import com.cfrdocarmo.cfrfood.domain.model.dto.VendaDiaria;
 import com.cfrdocarmo.cfrfood.domain.service.VendaQueryService;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/estatisticas")
-public class EstatisticasController {
+public class EstatisticasController implements EstatisticaControllerOpenApi {
 
     @Autowired
     private VendaQueryService vendaQueryService;

@@ -5,6 +5,8 @@ import com.cfrdocarmo.cfrfood.api.assembler.RestauranteModelAssembler;
 import com.cfrdocarmo.cfrfood.api.model.RestauranteModel;
 import com.cfrdocarmo.cfrfood.api.model.input.RestauranteInput;
 import com.cfrdocarmo.cfrfood.api.model.view.RestauranteView;
+import com.cfrdocarmo.cfrfood.api.openapi.controller.RestauranteControllerOpenApi;
+import com.cfrdocarmo.cfrfood.api.openapi.model.RestauranteBasicoModelOpenApi;
 import com.cfrdocarmo.cfrfood.domain.exception.CidadeNaoEncontradaException;
 import com.cfrdocarmo.cfrfood.domain.exception.CozinhaNaoEncontradaException;
 import com.cfrdocarmo.cfrfood.domain.exception.NegocioException;
@@ -13,6 +15,9 @@ import com.cfrdocarmo.cfrfood.domain.model.Restaurante;
 import com.cfrdocarmo.cfrfood.domain.repository.RestauranteRepository;
 import com.cfrdocarmo.cfrfood.domain.service.CadastroRestauranteService;
 import com.fasterxml.jackson.annotation.JsonView;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +27,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/restaurantes")
-public class RestauranteController {
+public class RestauranteController implements RestauranteControllerOpenApi {
 
 	@Autowired
 	private RestauranteRepository restauranteRepository;

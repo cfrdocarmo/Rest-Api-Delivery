@@ -2,6 +2,7 @@ package com.cfrdocarmo.cfrfood.api.controller;
 
 import com.cfrdocarmo.cfrfood.api.assembler.GrupoInputDisassembler;
 import com.cfrdocarmo.cfrfood.api.assembler.GrupoModelAssembler;
+import com.cfrdocarmo.cfrfood.api.openapi.controller.GrupoControllerOpenApi;
 import com.cfrdocarmo.cfrfood.api.model.GrupoModel;
 import com.cfrdocarmo.cfrfood.api.model.input.GrupoInput;
 import com.cfrdocarmo.cfrfood.domain.model.Grupo;
@@ -9,14 +10,15 @@ import com.cfrdocarmo.cfrfood.domain.repository.GrupoRepository;
 import com.cfrdocarmo.cfrfood.domain.service.CadastroGrupoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/grupos")
-public class GrupoController {
+@RequestMapping(path ="/grupos", produces = MediaType.APPLICATION_JSON_VALUE)
+public class GrupoController implements GrupoControllerOpenApi {
 
     @Autowired
     private GrupoRepository grupoRepository;
