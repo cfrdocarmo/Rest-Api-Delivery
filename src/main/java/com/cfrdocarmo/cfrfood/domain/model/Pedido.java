@@ -1,6 +1,5 @@
 package com.cfrdocarmo.cfrfood.domain.model;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -92,6 +91,18 @@ public class Pedido {
 		setDataCancelamento(OffsetDateTime.now());
 	}
 
+	public boolean podeSerConfirmado() {
+		return getStatus().podeAlterarPara(StatusPedido.CONFIRMADO);
+	}
+
+	public boolean podeSerEntregue() {
+		return getStatus().podeAlterarPara(StatusPedido.ENTREGUE);
+	}
+
+	public boolean podeSerCancelado() {
+		return getStatus().podeAlterarPara(StatusPedido.CANCELADO);
+	}
+
 	private void setStatus(StatusPedido novoStatus) {
 		if(getStatus().naoPodeAlterarPara(novoStatus)) {
 			throw new NegocioException(
@@ -106,4 +117,6 @@ public class Pedido {
 	private void gerarCodigo() {
 		setCodigo(UUID.randomUUID().toString());
 	}
+
+
 }

@@ -1,19 +1,17 @@
 package com.cfrdocarmo.cfrfood.core.openapi;
 
 import com.cfrdocarmo.cfrfood.api.exceptionHandler.Problem;
-import com.cfrdocarmo.cfrfood.api.model.CozinhaModel;
-import com.cfrdocarmo.cfrfood.api.model.PedidoModel;
-import com.cfrdocarmo.cfrfood.api.model.PedidoResumoModel;
-import com.cfrdocarmo.cfrfood.api.openapi.model.CozinhasModelOpenApi;
-import com.cfrdocarmo.cfrfood.api.openapi.model.PageableModelOpenApi;
-import com.cfrdocarmo.cfrfood.api.openapi.model.PedidosResumoModelOpenApi;
+import com.cfrdocarmo.cfrfood.api.v1.model.*;
+import com.cfrdocarmo.cfrfood.api.v1.openapi.model.*;
 import com.fasterxml.classmate.TypeResolver;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.Links;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,7 +19,10 @@ import org.springframework.web.context.request.ServletWebRequest;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.*;
 import springfox.documentation.schema.AlternateTypeRules;
-import springfox.documentation.service.*;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
+import springfox.documentation.service.Response;
+import springfox.documentation.service.Tag;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.json.JacksonModuleRegistrar;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -59,12 +60,37 @@ public class SpringFoxConfig {
                 .additionalModels(typeResolver.resolve(Problem.class))
                 .ignoredParameterTypes(ServletWebRequest.class)
                 .directModelSubstitute(Pageable.class, PageableModelOpenApi.class)
+                .directModelSubstitute(Links.class, LinksModelOpenApi.class)
                 .alternateTypeRules(AlternateTypeRules.newRule(
-                                                        typeResolver.resolve(Page.class, CozinhaModel.class),
+                                                        typeResolver.resolve(PagedModel.class, CozinhaModel.class),
                                                         CozinhasModelOpenApi.class))
                 .alternateTypeRules(AlternateTypeRules.newRule(
-                                                        typeResolver.resolve(Page.class, PedidoResumoModel.class),
+                                                        typeResolver.resolve(PagedModel.class, PedidoResumoModel.class),
                                                          PedidosResumoModelOpenApi.class))
+                .alternateTypeRules(AlternateTypeRules.newRule(
+                                                        typeResolver.resolve(CollectionModel.class, CidadeModel.class),
+                                                        CidadesModelOpenApi.class))
+                .alternateTypeRules(AlternateTypeRules.newRule(
+                                                        typeResolver.resolve(CollectionModel.class, EstadoModel.class),
+                                                        EstadosModelOpenApi.class))
+                .alternateTypeRules(AlternateTypeRules.newRule(
+                                                        typeResolver.resolve(CollectionModel.class, FormaPagamentoModel.class),
+                                                        FormasPagamentoModelOpenApi.class))
+                .alternateTypeRules(AlternateTypeRules.newRule(
+                                                        typeResolver.resolve(CollectionModel.class, GrupoModel.class),
+                                                        GruposModelOpenApi.class))
+                .alternateTypeRules(AlternateTypeRules.newRule(
+                                                        typeResolver.resolve(CollectionModel.class, PermissaoModel.class),
+                                                        PermissoesModelOpenApi.class))
+                .alternateTypeRules(AlternateTypeRules.newRule(
+                                                        typeResolver.resolve(CollectionModel.class, ProdutoModel.class),
+                                                        ProdutosModelOpenApi.class))
+                .alternateTypeRules(AlternateTypeRules.newRule(
+                                                        typeResolver.resolve(CollectionModel.class, RestauranteBasicoModel.class),
+                                                        RestaurantesBasicoModelOpenApi.class))
+                .alternateTypeRules(AlternateTypeRules.newRule(
+                                                        typeResolver.resolve(CollectionModel.class, UsuarioModel.class),
+                                                        UsuariosModelOpenApi.class))
                 .apiInfo(apiInfo())
                 .tags(new Tag("Cidades", "Gerencia as cidades"),
                       new Tag("Grupos", "Gerencia os grupos de Usuários"),
@@ -75,7 +101,8 @@ public class SpringFoxConfig {
                       new Tag("Estados", "Gerencia os Restaurantes"),
                       new Tag("Produtos", "Gerencia os Produtos"),
                       new Tag("Usuarios", "Gerencia os Usuários"),
-                      new Tag("Estatisticas", "Gerencia as Estatísticas"));
+                      new Tag("Estatisticas", "Gerencia as Estatísticas"),
+                      new Tag("Permissões", "Gerencia as Permissões"));
     }
 
     @Bean

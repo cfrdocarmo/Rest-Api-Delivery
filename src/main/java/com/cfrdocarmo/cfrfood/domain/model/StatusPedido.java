@@ -1,6 +1,5 @@
 package com.cfrdocarmo.cfrfood.domain.model;
 
-import javax.persistence.criteria.Predicate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,5 +24,9 @@ public enum StatusPedido {
 
 	public boolean naoPodeAlterarPara(StatusPedido novoStatus) {
 		return !novoStatus.statusAnteriores.contains(this);
+	}
+
+	public boolean podeAlterarPara(StatusPedido novoStatus) {
+		return !naoPodeAlterarPara(novoStatus);
 	}
 }

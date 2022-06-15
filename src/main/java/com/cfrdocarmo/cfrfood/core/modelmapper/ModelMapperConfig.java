@@ -1,7 +1,7 @@
 package com.cfrdocarmo.cfrfood.core.modelmapper;
 
-import com.cfrdocarmo.cfrfood.api.model.EnderecoModel;
-import com.cfrdocarmo.cfrfood.api.model.input.ItemPedidoInput;
+import com.cfrdocarmo.cfrfood.api.v1.model.EnderecoModel;
+import com.cfrdocarmo.cfrfood.api.v1.model.input.ItemPedidoInput;
 import com.cfrdocarmo.cfrfood.domain.model.Endereco;
 import com.cfrdocarmo.cfrfood.domain.model.ItemPedido;
 import org.modelmapper.ModelMapper;
