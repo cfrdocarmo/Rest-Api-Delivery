@@ -86,10 +86,10 @@ insert into permissao (id, nome, descricao) values (3, 'APROVAR_COZINHAS', 'Apro
 
 insert into grupo_permissao (grupo_id, permissao_id) values (1, 1), (1, 2), (2, 1), (2, 2), (3, 1);
 
-insert into usuario (id, nome, email, senha, data_cadastro) values (1, 'João da Silva', 'joao.ger@algafood.com', '123', utc_timestamp);
-insert into usuario (id, nome, email, senha, data_cadastro) values (2, 'Maria Joaquina', 'maria.vnd@algafood.com', '123', utc_timestamp);
-insert into usuario (id, nome, email, senha, data_cadastro) values (3, 'José Souza', 'jose.aux@algafood.com', '123', utc_timestamp);
-insert into usuario (id, nome, email, senha, data_cadastro) values (4, 'Sebastião Martins', 'sebastiao.cad@algafood.com', '123', utc_timestamp);
+insert into usuario (id, nome, email, senha, data_cadastro) values (1, 'CFRdoCarmo', 'cfrdocarmo.ger@gmail.com', '$2a$12$8fLTl1LARsJOPZTgySjpre0FUraYHXNUtlB0eAdkAnOku8r.m.ZGu', utc_timestamp);
+insert into usuario (id, nome, email, senha, data_cadastro) values (2, 'Maria Joaquina', 'maria.vnd@gmail.com', '$2a$12$8fLTl1LARsJOPZTgySjpre0FUraYHXNUtlB0eAdkAnOku8r.m.ZGu', utc_timestamp);
+insert into usuario (id, nome, email, senha, data_cadastro) values (3, 'José Souza', 'jose.aux@gmail.com', '$2a$12$8fLTl1LARsJOPZTgySjpre0FUraYHXNUtlB0eAdkAnOku8r.m.ZGu', utc_timestamp);
+insert into usuario (id, nome, email, senha, data_cadastro) values (4, 'Sebastião Martins', 'sebastiao.cad@gmail.com', '$2a$12$8fLTl1LARsJOPZTgySjpre0FUraYHXNUtlB0eAdkAnOku8r.m.ZGu', utc_timestamp);
 
 insert into usuario_grupo (usuario_id, grupo_id) values (1, 1), (1, 2), (2, 2);
 
