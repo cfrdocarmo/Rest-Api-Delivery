@@ -4,6 +4,7 @@ import com.cfrdocarmo.cfrfood.api.v1.assembler.FotoProdutoModelAssembler;
 import com.cfrdocarmo.cfrfood.api.v1.model.FotoProdutoModel;
 import com.cfrdocarmo.cfrfood.api.v1.model.input.FotoProdutoInput;
 import com.cfrdocarmo.cfrfood.api.v1.openapi.controller.RestauranteFotoProdutoControllerOpenApi;
+import com.cfrdocarmo.cfrfood.core.security.CheckSecurity;
 import com.cfrdocarmo.cfrfood.domain.exception.EntidadeNaoEncontradaException;
 import com.cfrdocarmo.cfrfood.domain.model.FotoProduto;
 import com.cfrdocarmo.cfrfood.domain.model.Produto;
@@ -40,6 +41,7 @@ public class RestauranteProdutoFotoController implements RestauranteFotoProdutoC
     @Autowired
     private FotoProdutoModelAssembler fotoProdutoModelAssembler;
 
+    @CheckSecurity.Restaurantes.PodeEditar
     @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public FotoProdutoModel atualizarFoto(@PathVariable Long restauranteId,
                                           @PathVariable Long produtoId, @Valid FotoProdutoInput fotoProdutoInput,
@@ -60,6 +62,7 @@ public class RestauranteProdutoFotoController implements RestauranteFotoProdutoC
         return fotoProdutoModelAssembler.toModel(fotoSalva);
     }
 
+    @CheckSecurity.Restaurantes.PodeEditar
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void excluir(@PathVariable Long restauranteId,
@@ -67,6 +70,7 @@ public class RestauranteProdutoFotoController implements RestauranteFotoProdutoC
         catalogoFotoProduto.excluir(restauranteId, produtoId);
     }
 
+    @CheckSecurity.Restaurantes.PodeConsultar
     @GetMapping(produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<?> buscar(@PathVariable Long restauranteId, @PathVariable Long produtoId,
                                     @RequestHeader(name="accept") String acceptHeader)

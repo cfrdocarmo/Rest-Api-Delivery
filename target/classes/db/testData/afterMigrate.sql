@@ -80,20 +80,47 @@ insert into produto (nome, descricao, preco, ativo, restaurante_id) values ('Esp
 
 insert into grupo (id, nome) values (1, 'Gerente'), (2, 'Vendedor'), (3, 'Secretária'), (4, 'Cadastrador');
 
-insert into permissao (id, nome, descricao) values (1, 'CONSULTAR_COZINHAS', 'Permite consultar cozinhas');
-insert into permissao (id, nome, descricao) values (2, 'EDITAR_COZINHAS', 'Permite editar cozinhas');
-insert into permissao (id, nome, descricao) values (3, 'APROVAR_COZINHAS', 'Aprova cozinhas');
+insert into permissao (id, nome, descricao) values (1, 'EDITAR_COZINHAS', 'Permite editar cozinhas');
+insert into permissao (id, nome, descricao) values (2, 'EDITAR_FORMAS_PAGAMENTO', 'Permite criar ou editar formas de pagamento');
+insert into permissao (id, nome, descricao) values (3, 'EDITAR_CIDADES', 'Permite criar ou editar cidades');
+insert into permissao (id, nome, descricao) values (4, 'EDITAR_ESTADOS', 'Permite criar ou editar estados');
+insert into permissao (id, nome, descricao) values (5, 'CONSULTAR_USUARIOS', 'Permite consultar usuários');
+insert into permissao (id, nome, descricao) values (6, 'EDITAR_USUARIOS', 'Permite criar ou editar usuários');
+insert into permissao (id, nome, descricao) values (7, 'EDITAR_RESTAURANTES', 'Permite criar, editar ou gerenciar restaurantes');
+insert into permissao (id, nome, descricao) values (8, 'CONSULTAR_PEDIDOS', 'Permite consultar pedidos');
+insert into permissao (id, nome, descricao) values (9, 'GERENCIAR_PEDIDOS', 'Permite gerenciar pedidos');
+insert into permissao (id, nome, descricao) values (10, 'GERAR_RELATORIOS', 'Permite gerar relatórios');
 
-insert into grupo_permissao (grupo_id, permissao_id) values (1, 1), (1, 2), (2, 1), (2, 2), (3, 1);
+# Adiciona todas as permissoes no grupo do gerente
+insert into grupo_permissao (grupo_id, permissao_id)
+select 1, id from permissao;
 
-insert into usuario (id, nome, email, senha, data_cadastro) values (1, 'CFRdoCarmo', 'cfrdocarmo.ger@gmail.com', '$2a$12$8fLTl1LARsJOPZTgySjpre0FUraYHXNUtlB0eAdkAnOku8r.m.ZGu', utc_timestamp);
+# Adiciona permissoes no grupo do vendedor
+insert into grupo_permissao (grupo_id, permissao_id)
+select 2, id from permissao where nome like 'CONSULTAR_%';
+
+insert into grupo_permissao (grupo_id, permissao_id)
+select 2, id from permissao where nome = 'EDITAR_RESTAURANTES';
+
+# Adiciona permissoes no grupo do auxiliar
+insert into grupo_permissao (grupo_id, permissao_id)
+select 3, id from permissao where nome like 'CONSULTAR_%';
+
+# Adiciona permissoes no grupo cadastrador
+insert into grupo_permissao (grupo_id, permissao_id)
+select 4, id from permissao where nome like '%_RESTAURANTES';
+
+insert into usuario (id, nome, email, senha, data_cadastro) values (1, 'Carlos Felipe', 'cfrdocarmo.ger@gmail.com', '$2a$12$8fLTl1LARsJOPZTgySjpre0FUraYHXNUtlB0eAdkAnOku8r.m.ZGu', utc_timestamp);
 insert into usuario (id, nome, email, senha, data_cadastro) values (2, 'Maria Joaquina', 'maria.vnd@gmail.com', '$2a$12$8fLTl1LARsJOPZTgySjpre0FUraYHXNUtlB0eAdkAnOku8r.m.ZGu', utc_timestamp);
 insert into usuario (id, nome, email, senha, data_cadastro) values (3, 'José Souza', 'jose.aux@gmail.com', '$2a$12$8fLTl1LARsJOPZTgySjpre0FUraYHXNUtlB0eAdkAnOku8r.m.ZGu', utc_timestamp);
 insert into usuario (id, nome, email, senha, data_cadastro) values (4, 'Sebastião Martins', 'sebastiao.cad@gmail.com', '$2a$12$8fLTl1LARsJOPZTgySjpre0FUraYHXNUtlB0eAdkAnOku8r.m.ZGu', utc_timestamp);
+insert into usuario (id, nome, email, senha, data_cadastro) values (5, 'Manoel Lima', 'manoel.loja@gmail.com', '$2y$12$NSsM4gEOR7MKogflKR7GMeYugkttjNhAJMvFdHrBLaLp2HzlggP5W', utc_timestamp);
+insert into usuario (id, nome, email, senha, data_cadastro) values (6, 'Débora Mendonça', 'email.teste.aw+debora@gmail.com', '$2y$12$NSsM4gEOR7MKogflKR7GMeYugkttjNhAJMvFdHrBLaLp2HzlggP5W', utc_timestamp);
+insert into usuario (id, nome, email, senha, data_cadastro) values (7, 'Carlos Lima', 'email.teste.aw+carlos@gmail.com', '$2y$12$NSsM4gEOR7MKogflKR7GMeYugkttjNhAJMvFdHrBLaLp2HzlggP5W', utc_timestamp);
 
-insert into usuario_grupo (usuario_id, grupo_id) values (1, 1), (1, 2), (2, 2);
+insert into usuario_grupo (usuario_id, grupo_id) values (1, 1), (1, 2), (2, 2), (3, 3), (4, 4);
 
-insert into restaurante_usuario_responsavel(restaurante_id, usuario_id) values (1, 1), (1, 2), (2, 1), (2, 2), (2, 3), (3, 4);
+insert into restaurante_usuario_responsavel(restaurante_id, usuario_id) values (1, 5), (3, 5);
 
 insert into pedido (id, codigo, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep,
                     endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,

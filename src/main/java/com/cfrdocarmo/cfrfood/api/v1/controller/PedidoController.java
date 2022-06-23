@@ -9,6 +9,7 @@ import com.cfrdocarmo.cfrfood.api.v1.model.input.PedidoInput;
 import com.cfrdocarmo.cfrfood.api.v1.openapi.controller.PedidoControllerOpenApi;
 import com.cfrdocarmo.cfrfood.core.data.PageWrapper;
 import com.cfrdocarmo.cfrfood.core.data.PageableTranslator;
+import com.cfrdocarmo.cfrfood.core.security.CFRdoCarmoSecurity;
 import com.cfrdocarmo.cfrfood.domain.exception.EntidadeNaoEncontradaException;
 import com.cfrdocarmo.cfrfood.domain.exception.NegocioException;
 import com.cfrdocarmo.cfrfood.domain.model.Pedido;
@@ -51,6 +52,9 @@ public class PedidoController implements PedidoControllerOpenApi {
     @Autowired
     private PagedResourcesAssembler<Pedido> pagedResourcesAssembler;
 
+    @Autowired
+    private CFRdoCarmoSecurity cfRdoCarmoSecurity;
+
     @GetMapping
     public PagedModel<PedidoResumoModel> pesquisar(PedidoFilter filtro,
                                                    @PageableDefault(size = 10) Pageable pageable) {
@@ -78,9 +82,9 @@ public class PedidoController implements PedidoControllerOpenApi {
         try{
             Pedido novoPedido = pedidoInputDisassembler.toDomainObject(pedidoInput);
 
-            //TODO pegar usuário autenticado
+
             novoPedido.setCliente(new Usuario());
-            novoPedido.getCliente().setId(1L);
+            novoPedido.getCliente().setId(cfRdoCarmoSecurity.getUsuarioId());
 
             novoPedido = emissaoPedido.emitir(novoPedido);
 

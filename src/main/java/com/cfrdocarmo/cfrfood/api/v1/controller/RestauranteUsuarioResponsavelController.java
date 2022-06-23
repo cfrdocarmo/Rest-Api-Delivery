@@ -4,6 +4,7 @@ import com.cfrdocarmo.cfrfood.api.v1.CFRdoCarmoLinks;
 import com.cfrdocarmo.cfrfood.api.v1.assembler.UsuarioModelAssembler;
 import com.cfrdocarmo.cfrfood.api.v1.model.UsuarioModel;
 import com.cfrdocarmo.cfrfood.api.v1.openapi.controller.RestauranteUsuarioResponsavelControllerOpenApi;
+import com.cfrdocarmo.cfrfood.core.security.CheckSecurity;
 import com.cfrdocarmo.cfrfood.domain.model.Restaurante;
 import com.cfrdocarmo.cfrfood.domain.service.CadastroRestauranteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class RestauranteUsuarioResponsavelController implements RestauranteUsuar
     @Autowired
     private CFRdoCarmoLinks links;
 
+    @CheckSecurity.Restaurantes.PodeConsultar
     @GetMapping
     public CollectionModel<UsuarioModel> listar(@PathVariable Long restauranteId) {
         Restaurante restaurante = cadastroRestaurante.buscarOuFalhar(restauranteId);
@@ -43,6 +45,7 @@ public class RestauranteUsuarioResponsavelController implements RestauranteUsuar
         return usuarioModelCollectionModel;
     }
 
+    @CheckSecurity.Restaurantes.PodeEditar
     @DeleteMapping("/{usuarioId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> desassociar(@PathVariable Long restauranteId, @PathVariable Long usuarioId) {
@@ -51,6 +54,7 @@ public class RestauranteUsuarioResponsavelController implements RestauranteUsuar
         return ResponseEntity.noContent().build();
     }
 
+    @CheckSecurity.Restaurantes.PodeEditar
     @PutMapping("/{usuarioId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> associar(@PathVariable Long restauranteId, @PathVariable Long usuarioId) {
