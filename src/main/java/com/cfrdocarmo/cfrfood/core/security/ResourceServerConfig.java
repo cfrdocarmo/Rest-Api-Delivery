@@ -65,10 +65,5 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
         return jwtAuthenticationConverter;
     }
 
-//    @Bean
-//    public JwtDecoder jwtDecoder() {
-//        var secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), algothm);
-//
-//        return NimbusJwtDecoder.withSecretKey(secretKey).build();
-//    }
+
 }

@@ -1,5 +1,7 @@
 package com.cfrdocarmo.cfrfood.core.security;
 
+import com.cfrdocarmo.cfrfood.domain.repository.RestauranteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -7,6 +9,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CFRdoCarmoSecurity {
+
+    @Autowired
+    private RestauranteRepository restauranteRepository;
 
     public Authentication getAuthentication() {
         return SecurityContextHolder.getContext().getAuthentication();
@@ -17,4 +22,10 @@ public class CFRdoCarmoSecurity {
 
         return jwt.getClaim("usuario_id");
     }
+
+    public boolean gerenciaRestaurante(Long restauranteId) {
+        return restauranteRepository.existsResponsavel(restauranteId, getUsuarioId());
+    }
+
+
 }
