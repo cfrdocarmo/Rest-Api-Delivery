@@ -24,11 +24,11 @@ services:
     image: cfrdocarmo-api
     command: ["/wait-for-it.sh", "cfrdocarmofood-mysql:3306", "-t", "30", "--", "java", "-jar", "api.jar"]
     environment:
-      S3-ID-KEY-ACSESS: AKIAUI5IYRPGZR7NOHP3
-      s3-key-secret: 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
-      DB_HOST: cfrdocarmo-mysql
-      SPRING_SESSION_STORE_TYPE: redis
-      SPRING_REDIS_HOST: cfrdocarmo-redis
+      S3-ID-KEY-ACSESS:
+      s3-key-secret:
+      DB_HOST:
+      SPRING_SESSION_STORE_TYPE:
+      SPRING_REDIS_HOST:
       SPRING_PROFILES_ACTIVE: development
     networks:
       - cfrdocarmo-network
