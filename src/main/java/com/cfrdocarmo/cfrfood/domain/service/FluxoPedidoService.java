@@ -1,13 +1,10 @@
 package com.cfrdocarmo.cfrfood.domain.service;
 
-import com.cfrdocarmo.cfrfood.domain.exception.NegocioException;
 import com.cfrdocarmo.cfrfood.domain.model.Pedido;
-import com.cfrdocarmo.cfrfood.domain.model.StatusPedido;
+import com.cfrdocarmo.cfrfood.domain.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.OffsetDateTime;
 
 @Service
 public class FluxoPedidoService {
@@ -15,10 +12,15 @@ public class FluxoPedidoService {
     @Autowired
     private EmissaoPedidoService emissaoPedidoService;
 
+    @Autowired
+    private PedidoRepository pedidoRepository;
+
     @Transactional
     public void confirmar(String codigoPedido) {
         Pedido pedido = emissaoPedidoService.buscarOuFalhar(codigoPedido);
         pedido.confirmar();
+
+        pedidoRepository.save(pedido);
     }
 
     @Transactional
@@ -31,6 +33,8 @@ public class FluxoPedidoService {
     public void cancelar(String codigoPedido) {
         Pedido pedido = emissaoPedidoService.buscarOuFalhar(codigoPedido);
         pedido.cancelar();
+
+        pedidoRepository.save(pedido);
     }
 
 }

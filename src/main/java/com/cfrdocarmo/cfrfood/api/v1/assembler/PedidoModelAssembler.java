@@ -3,6 +3,7 @@ package com.cfrdocarmo.cfrfood.api.v1.assembler;
 import com.cfrdocarmo.cfrfood.api.v1.CFRdoCarmoLinks;
 import com.cfrdocarmo.cfrfood.api.v1.model.PedidoModel;
 import com.cfrdocarmo.cfrfood.api.v1.controller.PedidoController;
+import com.cfrdocarmo.cfrfood.core.security.CFRdoCarmoSecurity;
 import com.cfrdocarmo.cfrfood.domain.model.Pedido;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class PedidoModelAssembler extends RepresentationModelAssemblerSupport<Pe
     @Autowired
     private CFRdoCarmoLinks links;
 
+    @Autowired
+    private CFRdoCarmoSecurity cfRdoCarmoSecurity;
+
     public PedidoModelAssembler() {
         super(PedidoController.class, PedidoModel.class);
     }
@@ -30,16 +34,18 @@ public class PedidoModelAssembler extends RepresentationModelAssemblerSupport<Pe
 
         pedidoModel.add(links.linkToPedido("pedidos"));
 
-        if (pedido.podeSerConfirmado()) {
-            pedidoModel.add(links.linkToConfirmacaoPedido(pedido.getCodigo(), "confirmar"));
-        }
+        if( cfRdoCarmoSecurity.podeGerenciarPedidos(pedido.getCodigo()) ) {
+            if (pedido.podeSerConfirmado()) {
+                pedidoModel.add(links.linkToConfirmacaoPedido(pedido.getCodigo(), "confirmar"));
+            }
 
-        if (pedido.podeSerCancelado()) {
-            pedidoModel.add(links.linkToCancelamentoPedido(pedido.getCodigo(), "cancelar"));
-        }
+            if (pedido.podeSerCancelado()) {
+                pedidoModel.add(links.linkToCancelamentoPedido(pedido.getCodigo(), "cancelar"));
+            }
 
-        if (pedido.podeSerEntregue()) {
-            pedidoModel.add(links.linkToEntregarPedido(pedido.getCodigo(), "entregar"));
+            if (pedido.podeSerEntregue()) {
+                pedidoModel.add(links.linkToEntregarPedido(pedido.getCodigo(), "entregar"));
+            }
         }
 
         pedidoModel.getRestaurante().add(links.linkToRestaurante(pedidoModel.getRestaurante().getId()));

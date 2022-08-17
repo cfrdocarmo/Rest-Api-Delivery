@@ -5,6 +5,7 @@ import com.cfrdocarmo.cfrfood.api.v1.assembler.FormaPagamentoInputDisassembler;
 import com.cfrdocarmo.cfrfood.api.v1.model.FormaPagamentoModel;
 import com.cfrdocarmo.cfrfood.api.v1.model.input.FormaPagamentoInput;
 import com.cfrdocarmo.cfrfood.api.v1.openapi.controller.FormasPagamentoControllerOpenApi;
+import com.cfrdocarmo.cfrfood.core.security.CheckSecurity;
 import com.cfrdocarmo.cfrfood.domain.model.FormaPagamento;
 import com.cfrdocarmo.cfrfood.domain.repository.FormaPagamentoRepository;
 import com.cfrdocarmo.cfrfood.domain.service.CadastroFormaPagamentoService;
@@ -39,6 +40,7 @@ public class FormaPagamentoController implements FormasPagamentoControllerOpenAp
     @Autowired
     private FormaPagamentoRepository formaPagamentoRepository;
 
+    @CheckSecurity.FormasPagamento.PodeConsultar
     @GetMapping
     public ResponseEntity<CollectionModel<FormaPagamentoModel>> listar(ServletWebRequest request) {
 
@@ -66,6 +68,7 @@ public class FormaPagamentoController implements FormasPagamentoControllerOpenAp
                 .body(todasFormasPagamento);
     }
 
+    @CheckSecurity.FormasPagamento.PodeConsultar
     @GetMapping("/{formaPagamentoId}")
     public ResponseEntity<FormaPagamentoModel> buscarPorID(@PathVariable Long formaPagamentoId, ServletWebRequest request) {
 
@@ -95,6 +98,7 @@ public class FormaPagamentoController implements FormasPagamentoControllerOpenAp
                 .body(formaPagamentoModel);
     }
 
+    @CheckSecurity.FormasPagamento.PodeEditar
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public FormaPagamentoModel adicionar(@RequestBody @Valid FormaPagamentoInput formaPagamentoInput){
@@ -105,6 +109,7 @@ public class FormaPagamentoController implements FormasPagamentoControllerOpenAp
         return formaPagamentoAssembler.toModel(formaPagamento);
     }
 
+    @CheckSecurity.FormasPagamento.PodeEditar
     @PutMapping("/{formaPagamentoId}")
     public FormaPagamentoModel atualizar(@PathVariable Long formaPagamentoId, @RequestBody @Valid FormaPagamentoInput formaPagamentoInput) {
         FormaPagamento formaPagamentoAtual = cadastroFormaPagamento.buscarOuFalhar(formaPagamentoId);
@@ -114,6 +119,7 @@ public class FormaPagamentoController implements FormasPagamentoControllerOpenAp
         return formaPagamentoAssembler.toModel(cadastroFormaPagamento.salvar(formaPagamentoAtual));
     }
 
+    @CheckSecurity.FormasPagamento.PodeEditar
     @DeleteMapping("/{formaPagamentoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void excluir(@PathVariable Long formaPagamentoId) {

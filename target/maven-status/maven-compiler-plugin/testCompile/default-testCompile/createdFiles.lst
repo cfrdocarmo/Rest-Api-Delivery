@@ -1,1 +1,5 @@
 com\cfrdocarmo\cfrfood\CadastroCozinhaIT.class
+com\cfrdocarmo\cfrfood\CadastroCozinhaITOld.class
+com\cfrdocarmo\cfrfood\util\ResourceUtils.class
+com\cfrdocarmo\cfrfood\CadastroRestauranteIT.class
+com\cfrdocarmo\cfrfood\util\DatabaseCleaner.class

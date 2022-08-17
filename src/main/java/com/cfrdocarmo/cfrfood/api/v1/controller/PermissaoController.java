@@ -3,6 +3,7 @@ package com.cfrdocarmo.cfrfood.api.v1.controller;
 import com.cfrdocarmo.cfrfood.api.v1.assembler.PermissaoModelAssembler;
 import com.cfrdocarmo.cfrfood.api.v1.model.PermissaoModel;
 import com.cfrdocarmo.cfrfood.api.v1.openapi.controller.PermissaoControllerOpenApi;
+import com.cfrdocarmo.cfrfood.core.security.CheckSecurity;
 import com.cfrdocarmo.cfrfood.domain.model.Permissao;
 import com.cfrdocarmo.cfrfood.domain.repository.PermissaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class PermissaoController implements PermissaoControllerOpenApi {
 	@Autowired
 	private PermissaoModelAssembler permissaoModelAssembler;
 
-	
+	@CheckSecurity.UsuariosGruposPermissoes.PodeConsultar
 	@GetMapping
 	public CollectionModel<PermissaoModel> listar() {
 		List<Permissao> todasAsPermissoes = permissaoRepository.findAll();
@@ -33,6 +34,5 @@ public class PermissaoController implements PermissaoControllerOpenApi {
 
 		return permissaoModels;
 	}
-	
 
 }

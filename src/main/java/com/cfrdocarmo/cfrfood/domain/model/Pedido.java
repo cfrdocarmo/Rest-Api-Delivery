@@ -7,16 +7,19 @@ import java.util.UUID;
 
 import javax.persistence.*;
 
+import com.cfrdocarmo.cfrfood.domain.event.PedidoCanceladoEvent;
+import com.cfrdocarmo.cfrfood.domain.event.PedidoConfirmadoEvent;
 import com.cfrdocarmo.cfrfood.domain.exception.NegocioException;
 import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.data.domain.AbstractAggregateRoot;
 
 @Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Entity
-public class Pedido {
+public class Pedido extends AbstractAggregateRoot<Pedido> {
 
 	@EqualsAndHashCode.Include
 	@Id
@@ -79,6 +82,8 @@ public class Pedido {
 	public void confirmar() {
 		setStatus(StatusPedido.CONFIRMADO);
 		setDataConfirmacao(OffsetDateTime.now());
+
+		registerEvent(new PedidoConfirmadoEvent(this));
 	}
 
 	public void entregar() {
@@ -89,6 +94,8 @@ public class Pedido {
 	public void cancelar() {
 		setStatus(StatusPedido.CANCELADO);
 		setDataCancelamento(OffsetDateTime.now());
+
+		registerEvent(new PedidoCanceladoEvent(this));
 	}
 
 	public boolean podeSerConfirmado() {

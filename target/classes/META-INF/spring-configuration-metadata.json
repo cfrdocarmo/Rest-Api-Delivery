@@ -1,6 +1,21 @@
 {
   "groups": [
     {
+      "name": "cfrdocarmo.jwt.keys",
+      "type": "com.cfrdocarmo.cfrfood.core.security.authorizationserver.JwtKeyStoreProperties",
+      "sourceType": "com.cfrdocarmo.cfrfood.core.security.authorizationserver.JwtKeyStoreProperties"
+    },
+    {
+      "name": "cfrdocarmofood.email",
+      "type": "com.cfrdocarmo.cfrfood.core.email.EmailProperties",
+      "sourceType": "com.cfrdocarmo.cfrfood.core.email.EmailProperties"
+    },
+    {
+      "name": "cfrdocarmofood.email.sandbox",
+      "type": "com.cfrdocarmo.cfrfood.core.email.EmailProperties$Sandbox",
+      "sourceType": "com.cfrdocarmo.cfrfood.core.email.EmailProperties"
+    },
+    {
       "name": "cfrdocarmofood.storage",
       "type": "com.cfrdocarmo.cfrfood.core.storage.StorageProperties",
       "sourceType": "com.cfrdocarmo.cfrfood.core.storage.StorageProperties"
@@ -17,6 +32,36 @@
     }
   ],
   "properties": [
+    {
+      "name": "cfrdocarmo.jwt.keys.jks-location",
+      "type": "org.springframework.core.io.Resource",
+      "sourceType": "com.cfrdocarmo.cfrfood.core.security.authorizationserver.JwtKeyStoreProperties"
+    },
+    {
+      "name": "cfrdocarmo.jwt.keys.keypair-alias",
+      "type": "java.lang.String",
+      "sourceType": "com.cfrdocarmo.cfrfood.core.security.authorizationserver.JwtKeyStoreProperties"
+    },
+    {
+      "name": "cfrdocarmo.jwt.keys.password",
+      "type": "java.lang.String",
+      "sourceType": "com.cfrdocarmo.cfrfood.core.security.authorizationserver.JwtKeyStoreProperties"
+    },
+    {
+      "name": "cfrdocarmofood.email.impl",
+      "type": "com.cfrdocarmo.cfrfood.core.email.EmailProperties$Implementacao",
+      "sourceType": "com.cfrdocarmo.cfrfood.core.email.EmailProperties"
+    },
+    {
+      "name": "cfrdocarmofood.email.remetente",
+      "type": "java.lang.String",
+      "sourceType": "com.cfrdocarmo.cfrfood.core.email.EmailProperties"
+    },
+    {
+      "name": "cfrdocarmofood.email.sandbox.destinatario",
+      "type": "java.lang.String",
+      "sourceType": "com.cfrdocarmo.cfrfood.core.email.EmailProperties$Sandbox"
+    },
     {
       "name": "cfrdocarmofood.storage.local.diretorio-fotos",
       "type": "java.nio.file.Path",

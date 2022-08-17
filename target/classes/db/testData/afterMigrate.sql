@@ -1,6 +1,10 @@
 set foreign_key_checks = 0;
 SET sql_safe_updates=0;
 
+lock tables cidade write, cozinha write, estado write, forma_pagamento write, grupo write, grupo_permissao write, permissao write, produto write,
+            restaurante write, restaurante_forma_pagamento write, usuario write, usuario_grupo write, restaurante_usuario_responsavel write,
+            pedido write, item_pedido write, foto_produto write, oauth_client_details write, oauth_code write;
+
 delete from cidade;
 delete from cozinha;
 delete from estado;
@@ -17,6 +21,8 @@ delete from restaurante_usuario_responsavel;
 delete from pedido;
 delete from item_pedido;
 delete from foto_produto;
+delete from oauth_client_details;
+delete from oauth_code;
 
 set foreign_key_checks = 1;
 SET sql_safe_updates=1;
@@ -84,8 +90,8 @@ insert into permissao (id, nome, descricao) values (1, 'EDITAR_COZINHAS', 'Permi
 insert into permissao (id, nome, descricao) values (2, 'EDITAR_FORMAS_PAGAMENTO', 'Permite criar ou editar formas de pagamento');
 insert into permissao (id, nome, descricao) values (3, 'EDITAR_CIDADES', 'Permite criar ou editar cidades');
 insert into permissao (id, nome, descricao) values (4, 'EDITAR_ESTADOS', 'Permite criar ou editar estados');
-insert into permissao (id, nome, descricao) values (5, 'CONSULTAR_USUARIOS', 'Permite consultar usuários');
-insert into permissao (id, nome, descricao) values (6, 'EDITAR_USUARIOS', 'Permite criar ou editar usuários');
+insert into permissao (id, nome, descricao) values (5, 'CONSULTAR_USUARIOS_GRUPOS_PERMISSOES', 'Permite consultar usuários, grupos e permissões');
+insert into permissao (id, nome, descricao) values (6, 'EDITAR_USUARIOS_GRUPOS_PERMISSOES', 'Permite criar ou editar usuários, grupos e permissões');
 insert into permissao (id, nome, descricao) values (7, 'EDITAR_RESTAURANTES', 'Permite criar, editar ou gerenciar restaurantes');
 insert into permissao (id, nome, descricao) values (8, 'CONSULTAR_PEDIDOS', 'Permite consultar pedidos');
 insert into permissao (id, nome, descricao) values (9, 'GERENCIAR_PEDIDOS', 'Permite gerenciar pedidos');
@@ -115,7 +121,7 @@ insert into usuario (id, nome, email, senha, data_cadastro) values (2, 'Maria Jo
 insert into usuario (id, nome, email, senha, data_cadastro) values (3, 'José Souza', 'jose.aux@gmail.com', '$2a$12$8fLTl1LARsJOPZTgySjpre0FUraYHXNUtlB0eAdkAnOku8r.m.ZGu', utc_timestamp);
 insert into usuario (id, nome, email, senha, data_cadastro) values (4, 'Sebastião Martins', 'sebastiao.cad@gmail.com', '$2a$12$8fLTl1LARsJOPZTgySjpre0FUraYHXNUtlB0eAdkAnOku8r.m.ZGu', utc_timestamp);
 insert into usuario (id, nome, email, senha, data_cadastro) values (5, 'Manoel Lima', 'manoel.loja@gmail.com', '$2y$12$NSsM4gEOR7MKogflKR7GMeYugkttjNhAJMvFdHrBLaLp2HzlggP5W', utc_timestamp);
-insert into usuario (id, nome, email, senha, data_cadastro) values (6, 'Débora Mendonça', 'email.teste.aw+debora@gmail.com', '$2y$12$NSsM4gEOR7MKogflKR7GMeYugkttjNhAJMvFdHrBLaLp2HzlggP5W', utc_timestamp);
+insert into usuario (id, nome, email, senha, data_cadastro) values (6, 'Débora Mendonça', 'cfrdocarmo@gmail.com', '$2y$12$NSsM4gEOR7MKogflKR7GMeYugkttjNhAJMvFdHrBLaLp2HzlggP5W', utc_timestamp);
 insert into usuario (id, nome, email, senha, data_cadastro) values (7, 'Carlos Lima', 'email.teste.aw+carlos@gmail.com', '$2y$12$NSsM4gEOR7MKogflKR7GMeYugkttjNhAJMvFdHrBLaLp2HzlggP5W', utc_timestamp);
 
 insert into usuario_grupo (usuario_id, grupo_id) values (1, 1), (1, 2), (2, 2), (3, 3), (4, 4);
@@ -125,7 +131,7 @@ insert into restaurante_usuario_responsavel(restaurante_id, usuario_id) values (
 insert into pedido (id, codigo, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep,
                     endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
                     status, data_criacao, subtotal, taxa_frete, valor_total)
-values (1, 'f9981ca4-5a5e-4da3-af04-933861df3e55', 1, 1, 1, 1, '38400-000', 'Rua Floriano Peixoto', '500', 'Apto 801', 'Brasil',
+values (1, 'f9981ca4-5a5e-4da3-af04-933861df3e55', 1, 6, 1, 1, '38400-000', 'Rua Floriano Peixoto', '500', 'Apto 801', 'Brasil',
         'CRIADO', utc_timestamp, 298.90, 10, 308.90);
 
 insert into item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
@@ -173,3 +179,38 @@ values (5, '8d774bcf-b238-42f3-aef1-5fb388754d63', 1, 3, 2, 1, '38400-200', 'Rua
 
 insert into item_pedido (id, pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
 values (6, 5, 3, 1, 87.2, 87.2, null);
+
+insert into oauth_client_details (
+    client_id, resource_ids, client_secret,
+    scope, authorized_grant_types, web_server_redirect_uri, authorities,
+    access_token_validity, refresh_token_validity, autoapprove
+)
+values (
+           'cfrdocarmofood-web', null, '$2y$12$w3igMjsfS5XoAYuowoH3C.54vRFWlcXSHLjX7MwF990Kc2KKKh72e',
+           'READ,WRITE', 'password', null, null,
+           60 * 60 * 6, 60 * 24 * 60 * 60, null
+       );
+
+insert into oauth_client_details (
+    client_id, resource_ids, client_secret,
+    scope, authorized_grant_types, web_server_redirect_uri, authorities,
+    access_token_validity, refresh_token_validity, autoapprove
+)
+values (
+           'foodanalytics', null, '$2a$12$wPxCgvTsujdcbdk59PgY0..b/EBvbcd1B6eYbfEVc1bLRlxYfD1Ae',
+           'READ,WRITE', 'authorization_code', 'http://www.foodanalytics.local:5500/foodanalytics/', null,
+           null, null, null
+       );
+
+insert into oauth_client_details (
+    client_id, resource_ids, client_secret,
+    scope, authorized_grant_types, web_server_redirect_uri, authorities,
+    access_token_validity, refresh_token_validity, autoapprove
+)
+values (
+           'faturamento', null, '$2y$12$fHixriC7yXX/i1/CmpnGH.RFyK/l5YapLCFOEbIktONjE8ZDykSnu',
+           'READ,WRITE', 'client_credentials', null, 'CONSULTAR_PEDIDOS,GERAR_RELATORIOS',
+           null, null, null
+       );
+
+unlock tables;

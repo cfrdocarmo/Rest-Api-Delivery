@@ -16,7 +16,6 @@ import javax.validation.constraints.PositiveOrZero;
 import javax.validation.groups.ConvertGroup;
 import javax.validation.groups.Default;
 import java.math.BigDecimal;
-import java.text.Normalizer;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -75,7 +74,7 @@ public class Restaurante {
 	@JoinTable(name = "restaurante_usuario_responsavel",
 	        joinColumns = @JoinColumn(name = "restaurante_id"),
 	        inverseJoinColumns = @JoinColumn(name = "usuario_id"))
-	private Set<Usuario> usuarios = new HashSet<>();
+	private Set<Usuario> responsaveis = new HashSet<>();
 	
 	@OneToMany(mappedBy = "restaurante")
 	private List<Produto> produtos = new ArrayList<>();
@@ -113,19 +112,19 @@ public class Restaurante {
 	}
 
 	public boolean associarUsuario(Usuario usuario) {
-		return getUsuarios().add(usuario);
+		return this.getResponsaveis().add(usuario);
 	}
 
 	public boolean desassociarUsuario(Usuario usuario) {
-		return getUsuarios().remove(usuario);
+		return this.getResponsaveis().remove(usuario);
 	}
 
 	public boolean removerResponsavel(Usuario usuario)  {
-		return  getUsuarios().remove(usuario);
+		return  this.getResponsaveis().remove(usuario);
 	}
 
 	public boolean adicionarResponsavel(Usuario usuario)  {
-		return  getUsuarios().add(usuario);
+		return  this.getResponsaveis().add(usuario);
 	}
 
 	public boolean isAberto() {

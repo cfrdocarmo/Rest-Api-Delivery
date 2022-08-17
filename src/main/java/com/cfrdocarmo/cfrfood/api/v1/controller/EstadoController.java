@@ -5,6 +5,7 @@ import com.cfrdocarmo.cfrfood.api.v1.assembler.EstadoModelAssembler;
 import com.cfrdocarmo.cfrfood.api.v1.model.EstadoModel;
 import com.cfrdocarmo.cfrfood.api.v1.model.input.EstadoInput;
 import com.cfrdocarmo.cfrfood.api.v1.openapi.controller.EstadoControllerOpenApi;
+import com.cfrdocarmo.cfrfood.core.security.CheckSecurity;
 import com.cfrdocarmo.cfrfood.domain.model.Estado;
 import com.cfrdocarmo.cfrfood.domain.repository.EstadoRepository;
 import com.cfrdocarmo.cfrfood.domain.service.CadastroEstadoService;
@@ -30,12 +31,14 @@ public class EstadoController implements EstadoControllerOpenApi {
 
 	@Autowired
 	private EstadoInputDisassembler estadoInputDisassembler;
-	
+
+	@CheckSecurity.Estados.PodeConsultar
 	@GetMapping
 	public CollectionModel<EstadoModel> listar() {
 		return estadoModelAssembler.toCollectionModel(estadoRepository.findAll());
 	}
-	
+
+	@CheckSecurity.Estados.PodeConsultar
 	@GetMapping("/{estadoId}")
 	public EstadoModel buscarPorId(@PathVariable Long estadoId){
 
@@ -43,7 +46,8 @@ public class EstadoController implements EstadoControllerOpenApi {
 
 		return estadoModelAssembler.toModel(estado);
 	}
-	
+
+	@CheckSecurity.Estados.PodeEditar
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public EstadoModel adicionar(@RequestBody @Valid EstadoInput estadoInput){
@@ -52,8 +56,8 @@ public class EstadoController implements EstadoControllerOpenApi {
 
 		return estadoModelAssembler.toModel(cadastroEstado.salvar(estado));
 	}
-	
-	
+
+	@CheckSecurity.Estados.PodeConsultar
 	@PutMapping("/{estadoId}")
 	public EstadoModel atualizar(@PathVariable Long estadoId, @RequestBody @Valid EstadoInput estadoInput){
 
@@ -64,7 +68,8 @@ public class EstadoController implements EstadoControllerOpenApi {
 
 		return estadoModelAssembler.toModel(cadastroEstado.salvar(estadoAtual));
 	}
-	
+
+	@CheckSecurity.Estados.PodeConsultar
 	@DeleteMapping("/{estadoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long estadoId) {

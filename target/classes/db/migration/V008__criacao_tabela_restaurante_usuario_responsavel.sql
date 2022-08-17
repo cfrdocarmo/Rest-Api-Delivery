@@ -4,7 +4,7 @@ create  table restaurante_usuario_responsavel (
 
       primary key (restaurante_id, usuario_id)
 
-) engine=InnoDB default charset=utf8;
+) engine=InnoDB default charset=utf8mb4;
 
 alter table restaurante_usuario_responsavel add constraint fk_restaurante_usuario_responsavel_restaurante
     foreign key (restaurante_id) references restaurante (id);

@@ -33,7 +33,7 @@ public class RestauranteUsuarioResponsavelController implements RestauranteUsuar
     public CollectionModel<UsuarioModel> listar(@PathVariable Long restauranteId) {
         Restaurante restaurante = cadastroRestaurante.buscarOuFalhar(restauranteId);
 
-        CollectionModel<UsuarioModel> usuarioModelCollectionModel = usuarioModelAssembler.toCollectionModel(restaurante.getUsuarios())
+        CollectionModel<UsuarioModel> usuarioModelCollectionModel = usuarioModelAssembler.toCollectionModel(restaurante.getResponsaveis())
                 .removeLinks()
                 .add(links.linkToResponsaveisRestaurante(restauranteId))
                 .add(links.linkToRestauranteResponsavelAssociacao(restauranteId, "associar"));

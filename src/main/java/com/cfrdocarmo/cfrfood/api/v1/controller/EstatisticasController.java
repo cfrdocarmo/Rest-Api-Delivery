@@ -2,6 +2,7 @@ package com.cfrdocarmo.cfrfood.api.v1.controller;
 
 import com.cfrdocarmo.cfrfood.api.v1.CFRdoCarmoLinks;
 import com.cfrdocarmo.cfrfood.api.v1.openapi.controller.EstatisticaControllerOpenApi;
+import com.cfrdocarmo.cfrfood.core.security.CheckSecurity;
 import com.cfrdocarmo.cfrfood.domain.filter.VendaDiariaFilter;
 import com.cfrdocarmo.cfrfood.domain.model.dto.VendaDiaria;
 import com.cfrdocarmo.cfrfood.domain.service.VendaQueryService;
@@ -34,6 +35,7 @@ public class EstatisticasController implements EstatisticaControllerOpenApi {
     public static class EstatisticasModel extends RepresentationModel<EstatisticasModel> {
     }
 
+    @CheckSecurity.Estatisticas.PodeConsultar
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public EstatisticasModel estatisticasModel() {
         var estatisticasModel = new EstatisticasModel();
@@ -43,12 +45,14 @@ public class EstatisticasController implements EstatisticaControllerOpenApi {
         return estatisticasModel;
     }
 
+    @CheckSecurity.Estatisticas.PodeConsultar
     @GetMapping(path = "/vendas-diarias", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<VendaDiaria> consultarVendasDiarias(VendaDiariaFilter filter,
                       @RequestParam( required = false, defaultValue = "+00:00") String timeOffset) {
         return vendaQueryService.consultarVendasDiarias(filter, timeOffset);
     }
 
+    @CheckSecurity.Estatisticas.PodeConsultar
     @GetMapping(path = "/vendas-diarias", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<byte[]> consultarVendasDiariasPdf(VendaDiariaFilter filtro,
                                                             @RequestParam( required = false, defaultValue = "+00:00") String timeOffset) {

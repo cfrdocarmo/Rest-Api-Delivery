@@ -2,6 +2,7 @@ package com.cfrdocarmo.cfrfood;
 
 import java.util.TimeZone;
 
+import com.cfrdocarmo.cfrfood.core.io.Base64ProtocoloResolver;
 import com.cfrdocarmo.cfrfood.infrastructure.repository.CustomJpaRepositoryImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,8 +14,10 @@ public class CFRdoCarmoFoodApiApplication {
 
 	public static void main(String[] args) {
 		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-		SpringApplication.run(CFRdoCarmoFoodApiApplication.class, args);
 
+		var app = new SpringApplication(CFRdoCarmoFoodApiApplication.class);
+		app.addListeners(new Base64ProtocoloResolver());
+		app.run(args);
 	}
 
 }

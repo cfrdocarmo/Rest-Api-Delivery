@@ -23,11 +23,9 @@ import org.springframework.web.context.request.ServletWebRequest;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.*;
 import springfox.documentation.schema.AlternateTypeRules;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
-import springfox.documentation.service.Response;
-import springfox.documentation.service.Tag;
+import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.json.JacksonModuleRegistrar;
 import springfox.documentation.spring.web.plugins.Docket;
 
@@ -96,6 +94,11 @@ public class SpringFoxConfig {
                 .alternateTypeRules(AlternateTypeRules.newRule(
                                                         typeResolver.resolve(CollectionModel.class, UsuarioModel.class),
                                                         UsuariosModelOpenApi.class))
+                .securitySchemes(Arrays.asList(securityScheme()))
+                .securityContexts(Arrays.asList(securityContext()))
+//                .securityContexts(Arrays.asList(securityContext()))
+//                .securitySchemes(List.of(authenticationScheme()))
+                .securityContexts(List.of(securityContext()))
                 .apiInfo(apiInfoV1())
                 .tags(new Tag("Cidades", "Gerencia as cidades"),
                       new Tag("Grupos", "Gerencia os grupos de Usuários"),
@@ -108,6 +111,51 @@ public class SpringFoxConfig {
                       new Tag("Usuarios", "Gerencia os Usuários"),
                       new Tag("Estatisticas", "Gerencia as Estatísticas"),
                       new Tag("Permissões", "Gerencia as Permissões"));
+    }
+
+//    private SecurityContext securityContext() {
+//        return SecurityContext.builder()
+//                .securityReferences(securityReference()).build();
+//    }
+
+    private List<SecurityReference> securityReference() {
+        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return List.of(new SecurityReference("Authorization", authorizationScopes));
+    }
+
+    private HttpAuthenticationScheme authenticationScheme() {
+        return HttpAuthenticationScheme.JWT_BEARER_BUILDER.name("Authorization").build();
+    }
+
+    private SecurityScheme securityScheme() {
+        return OAuth2Scheme.OAUTH2_PASSWORD_FLOW_BUILDER
+                .name("CFRdoCarmoFood")
+                .scopes(scopes())
+                .tokenUrl("/oauth/token")
+                .build();
+    }
+
+    private List<AuthorizationScope> scopes() {
+        return Arrays.asList(new AuthorizationScope("READ", "Acesso de leitura"),
+                new AuthorizationScope("WRITE", "Acesso de escrita"));
+    }
+//
+//    private List<GrantType> grantTypes() {
+//        return Arrays.asList(new ResourceOwnerPasswordCredentialsGrant("/oauth/token"));
+//    }
+
+    private SecurityContext securityContext() {
+        var securityReference = SecurityReference.builder()
+                .reference("CFRdoCarmoFood")
+                .scopes(scopes().toArray(new AuthorizationScope[0]))
+                .build();
+
+        return SecurityContext.builder()
+                .securityReferences(Arrays.asList(securityReference))
+                .operationSelector(operationContext -> true)
+                .build();
     }
 
     @Bean
@@ -129,6 +177,9 @@ public class SpringFoxConfig {
                 .ignoredParameterTypes(ServletWebRequest.class)
                 .directModelSubstitute(Pageable.class, PageableModelOpenApi.class)
                 .directModelSubstitute(Links.class, LinksModelOpenApi.class)
+                .securityContexts(Arrays.asList(securityContext()))
+                .securitySchemes(List.of(authenticationScheme()))
+                .securityContexts(List.of(securityContext()))
                 .alternateTypeRules(AlternateTypeRules.newRule(
                         typeResolver.resolve(CollectionModel.class, CidadeModelV2.class),
                         CidadesModelV2OpenApi.class))

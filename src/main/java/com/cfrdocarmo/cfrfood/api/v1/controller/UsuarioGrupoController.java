@@ -6,6 +6,7 @@ import com.cfrdocarmo.cfrfood.api.v1.assembler.UsuarioInputDisassembler;
 import com.cfrdocarmo.cfrfood.api.v1.assembler.UsuarioModelAssembler;
 import com.cfrdocarmo.cfrfood.api.v1.model.GrupoModel;
 import com.cfrdocarmo.cfrfood.api.v1.openapi.controller.UsuarioGrupoControllerOpenApi;
+import com.cfrdocarmo.cfrfood.core.security.CheckSecurity;
 import com.cfrdocarmo.cfrfood.domain.model.Usuario;
 import com.cfrdocarmo.cfrfood.domain.service.CadastroUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ public class UsuarioGrupoController implements UsuarioGrupoControllerOpenApi {
     @Autowired
     private CFRdoCarmoLinks links;
 
+    @CheckSecurity.UsuariosGruposPermissoes.PodeConsultar
     @GetMapping
     public CollectionModel<GrupoModel> listar(@PathVariable Long usuarioId) {
         Usuario usuario = cadastroUsuario.buscarOuFalhar(usuarioId);
@@ -48,6 +50,7 @@ public class UsuarioGrupoController implements UsuarioGrupoControllerOpenApi {
         return grupoModels;
     }
 
+    @CheckSecurity.UsuariosGruposPermissoes.PodeEditar
     @PutMapping("/{grupoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> adicionarGrupo(@PathVariable Long usuarioId, @PathVariable Long grupoId) {
@@ -56,6 +59,7 @@ public class UsuarioGrupoController implements UsuarioGrupoControllerOpenApi {
         return ResponseEntity.noContent().build();
     }
 
+    @CheckSecurity.UsuariosGruposPermissoes.PodeEditar
     @DeleteMapping("/{grupoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> removerGrupo(@PathVariable Long usuarioId, @PathVariable Long grupoId) {

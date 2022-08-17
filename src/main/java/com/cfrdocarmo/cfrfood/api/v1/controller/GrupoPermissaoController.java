@@ -6,6 +6,7 @@ import com.cfrdocarmo.cfrfood.api.v1.assembler.GrupoModelAssembler;
 import com.cfrdocarmo.cfrfood.api.v1.assembler.PermissaoModelAssembler;
 import com.cfrdocarmo.cfrfood.api.v1.model.PermissaoModel;
 import com.cfrdocarmo.cfrfood.api.v1.openapi.controller.GrupoPermissaoControllerOpenApi;
+import com.cfrdocarmo.cfrfood.core.security.CheckSecurity;
 import com.cfrdocarmo.cfrfood.domain.model.Grupo;
 import com.cfrdocarmo.cfrfood.domain.service.CadastroGrupoService;
 import com.cfrdocarmo.cfrfood.domain.service.CadastroPermissaoService;
@@ -37,6 +38,7 @@ public class GrupoPermissaoController implements GrupoPermissaoControllerOpenApi
     @Autowired
     private CFRdoCarmoLinks links;
 
+    @CheckSecurity.UsuariosGruposPermissoes.PodeConsultar
     @GetMapping
     public CollectionModel<PermissaoModel> listar (@PathVariable Long grupoId) {
         Grupo grupo = cadastroGrupo.buscarOuFalhar(grupoId);
@@ -53,6 +55,7 @@ public class GrupoPermissaoController implements GrupoPermissaoControllerOpenApi
         return permissoesModel;
     }
 
+    @CheckSecurity.UsuariosGruposPermissoes.PodeEditar
     @PutMapping("/{permissaoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> adicionarPermissao(@PathVariable Long grupoId , @PathVariable Long permissaoId) {
@@ -61,6 +64,7 @@ public class GrupoPermissaoController implements GrupoPermissaoControllerOpenApi
         return ResponseEntity.noContent().build();
     }
 
+    @CheckSecurity.UsuariosGruposPermissoes.PodeEditar
     @DeleteMapping("/{permissaoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> removerPermissao(@PathVariable Long grupoId , @PathVariable Long permissaoId) {
